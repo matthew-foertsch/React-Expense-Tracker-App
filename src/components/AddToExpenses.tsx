@@ -1,3 +1,4 @@
+//file started
 import { Button, Divider, MultiSelect, Text, TextInput } from "@mantine/core";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -78,7 +79,6 @@ const AddToExpenses = () => {
             label: capQuery,
             isused: "false",
           };
-          console.log("hello");
 
           setAvailableCategories((current) => [item, ...current]);
           return item;
@@ -93,7 +93,6 @@ const AddToExpenses = () => {
                 "Invalid Entries. Make sure the label is not empty and the amount is greater than zero."
               );
             } else {
-              // if the user does not select a category while creating his expense, set category equal to 'Uncatigorized'
               category[0] === undefined ||
               category[0] === null ||
               category[0] === ""
@@ -105,7 +104,6 @@ const AddToExpenses = () => {
                 id: crypto.randomUUID(),
               });
               setAvailableCategories((prev) => {
-                // set the isused property of the available category selected to true
                 return prev.map((c) => {
                   if (c.label === category[0]) {
                     c.isused = "true";
@@ -113,7 +111,7 @@ const AddToExpenses = () => {
                   return c;
                 });
               });
-              // navigate back to the home page
+
               navigate("/");
               addHistoryElement({
                 label: label,
@@ -131,24 +129,18 @@ const AddToExpenses = () => {
         <Button
           color="red"
           onClick={() => {
-            // Checks if the user has not selected a category
             if (category[0] === "") {
               alert("No category has been selected!");
             } else {
-              // if they have selected a category
-
-              // Uncategorized cannot be removed
               if (category[0] === "Uncategorized") {
                 alert("Uncategorized cannot be removed!");
                 return;
               }
-              let removed = false; // used to check if the category has been removed
+              let removed = false;
               setAvailableCategories((prev) => {
-                // create a hard copy of the previous category state
                 const arr: AvailableCategories[] = JSON.parse(
                   JSON.stringify(prev)
                 );
-                // if the category selected exists in the available categories array and its match is not being used remove the category
                 arr.forEach((c, index) => {
                   if (c.label === category[0] && c.isused === "false") {
                     arr.splice(index, 1);
@@ -158,7 +150,6 @@ const AddToExpenses = () => {
 
                 return arr;
               });
-              // if the category has not been removed then it is being used. Show an alert to notify the user
               removed
                 ? null
                 : alert("Category cannot be removed since it is being used.");
@@ -174,3 +165,4 @@ const AddToExpenses = () => {
 };
 
 export default AddToExpenses;
+//File ended
